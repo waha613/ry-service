@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProdCenterMapper">
+    
+    <resultMap type="ProdCenter" id="ProdCenterResult">
+        <result property="id"    column="id"    />
+        <result property="prodTitle"    column="prod_title"    />
+        <result property="prodCommon1"    column="prod_common_1"    />
+        <result property="prodCommon2"    column="prod_common_2"    />
+        <result property="prodCommon3"    column="prod_common_3"    />
+        <result property="prodCommon4"    column="prod_common_4"    />
+        <result property="prodImgAddress"    column="prod_img_address"    />
+        <result property="flag1"    column="flag_1"    />
+        <result property="flag2"    column="flag_2"    />
+    </resultMap>
+
+    <sql id="selectProdCenterVo">
+        select id, prod_title, prod_common_1, prod_common_2, prod_common_3, prod_common_4, prod_img_address, flag_1, flag_2 from prod_center
+    </sql>
+
+    <select id="selectProdCenterList" parameterType="ProdCenter" resultMap="ProdCenterResult">
+        <include refid="selectProdCenterVo"/>
+        <where>  
+            <if test="prodTitle != null  and prodTitle != ''"> and prod_title = #{prodTitle}</if>
+            <if test="prodCommon1 != null  and prodCommon1 != ''"> and prod_common_1 = #{prodCommon1}</if>
+            <if test="prodCommon2 != null  and prodCommon2 != ''"> and prod_common_2 = #{prodCommon2}</if>
+            <if test="prodCommon3 != null  and prodCommon3 != ''"> and prod_common_3 = #{prodCommon3}</if>
+            <if test="prodCommon4 != null  and prodCommon4 != ''"> and prod_common_4 = #{prodCommon4}</if>
+            <if test="prodImgAddress != null  and prodImgAddress != ''"> and prod_img_address = #{prodImgAddress}</if>
+            <if test="flag1 != null  and flag1 != ''"> and flag_1 = #{flag1}</if>
+            <if test="flag2 != null  and flag2 != ''"> and flag_2 = #{flag2}</if>
+        </where>
+    </select>
+    
+    <select id="selectProdCenterById" parameterType="Long" resultMap="ProdCenterResult">
+        <include refid="selectProdCenterVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertProdCenter" parameterType="ProdCenter">
+        insert into prod_center
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="prodTitle != null and prodTitle != ''">prod_title,</if>
+            <if test="prodCommon1 != null">prod_common_1,</if>
+            <if test="prodCommon2 != null">prod_common_2,</if>
+            <if test="prodCommon3 != null">prod_common_3,</if>
+            <if test="prodCommon4 != null">prod_common_4,</if>
+            <if test="prodImgAddress != null">prod_img_address,</if>
+            <if test="flag1 != null">flag_1,</if>
+            <if test="flag2 != null">flag_2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="prodTitle != null and prodTitle != ''">#{prodTitle},</if>
+            <if test="prodCommon1 != null">#{prodCommon1},</if>
+            <if test="prodCommon2 != null">#{prodCommon2},</if>
+            <if test="prodCommon3 != null">#{prodCommon3},</if>
+            <if test="prodCommon4 != null">#{prodCommon4},</if>
+            <if test="prodImgAddress != null">#{prodImgAddress},</if>
+            <if test="flag1 != null">#{flag1},</if>
+            <if test="flag2 != null">#{flag2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProdCenter" parameterType="ProdCenter">
+        update prod_center
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="prodTitle != null and prodTitle != ''">prod_title = #{prodTitle},</if>
+            <if test="prodCommon1 != null">prod_common_1 = #{prodCommon1},</if>
+            <if test="prodCommon2 != null">prod_common_2 = #{prodCommon2},</if>
+            <if test="prodCommon3 != null">prod_common_3 = #{prodCommon3},</if>
+            <if test="prodCommon4 != null">prod_common_4 = #{prodCommon4},</if>
+            <if test="prodImgAddress != null">prod_img_address = #{prodImgAddress},</if>
+            <if test="flag1 != null">flag_1 = #{flag1},</if>
+            <if test="flag2 != null">flag_2 = #{flag2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProdCenterById" parameterType="Long">
+        delete from prod_center where id = #{id}
+    </delete>
+
+    <delete id="deleteProdCenterByIds" parameterType="String">
+        delete from prod_center where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
