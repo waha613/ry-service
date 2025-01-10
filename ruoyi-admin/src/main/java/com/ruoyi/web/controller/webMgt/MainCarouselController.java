@@ -131,7 +131,7 @@ public class MainCarouselController extends BaseController
     @PostMapping("/mainList")
     @ResponseBody
     @Anonymous
-    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+    @CrossOrigin(origins = "http://101.200.63.144", maxAge = 3600)
     public ResultData mainList(MainCarousel mainCarousel)
     {
         mainCarousel.setStatus("Y");

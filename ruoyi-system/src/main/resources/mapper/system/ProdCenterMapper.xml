@@ -12,12 +12,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="prodCommon3"    column="prod_common_3"    />
         <result property="prodCommon4"    column="prod_common_4"    />
         <result property="prodImgAddress"    column="prod_img_address"    />
+        <result property="prodType"    column="prod_type"    />
         <result property="flag1"    column="flag_1"    />
         <result property="flag2"    column="flag_2"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectProdCenterVo">
-        select id, prod_title, prod_common_1, prod_common_2, prod_common_3, prod_common_4, prod_img_address, flag_1, flag_2 from prod_center
+        select id, prod_title, prod_common_1, prod_common_2, prod_common_3, prod_common_4, prod_img_address, prod_type, flag_1, flag_2, status, create_by, create_time, update_by, update_time, remark from prod_center
     </sql>
 
     <select id="selectProdCenterList" parameterType="ProdCenter" resultMap="ProdCenterResult">
@@ -29,8 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="prodCommon3 != null  and prodCommon3 != ''"> and prod_common_3 = #{prodCommon3}</if>
             <if test="prodCommon4 != null  and prodCommon4 != ''"> and prod_common_4 = #{prodCommon4}</if>
             <if test="prodImgAddress != null  and prodImgAddress != ''"> and prod_img_address = #{prodImgAddress}</if>
+            <if test="prodType != null  and prodType != ''"> and prod_type = #{prodType}</if>
             <if test="flag1 != null  and flag1 != ''"> and flag_1 = #{flag1}</if>
             <if test="flag2 != null  and flag2 != ''"> and flag_2 = #{flag2}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
     
@@ -39,43 +48,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <insert id="insertProdCenter" parameterType="ProdCenter">
+    <insert id="insertProdCenter" parameterType="ProdCenter" useGeneratedKeys="true" keyProperty="id">
         insert into prod_center
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="prodTitle != null and prodTitle != ''">prod_title,</if>
+            <if test="prodTitle != null">prod_title,</if>
             <if test="prodCommon1 != null">prod_common_1,</if>
             <if test="prodCommon2 != null">prod_common_2,</if>
             <if test="prodCommon3 != null">prod_common_3,</if>
             <if test="prodCommon4 != null">prod_common_4,</if>
             <if test="prodImgAddress != null">prod_img_address,</if>
+            <if test="prodType != null and prodType != ''">prod_type,</if>
             <if test="flag1 != null">flag_1,</if>
             <if test="flag2 != null">flag_2,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="prodTitle != null and prodTitle != ''">#{prodTitle},</if>
+            <if test="prodTitle != null">#{prodTitle},</if>
             <if test="prodCommon1 != null">#{prodCommon1},</if>
             <if test="prodCommon2 != null">#{prodCommon2},</if>
             <if test="prodCommon3 != null">#{prodCommon3},</if>
             <if test="prodCommon4 != null">#{prodCommon4},</if>
             <if test="prodImgAddress != null">#{prodImgAddress},</if>
+            <if test="prodType != null and prodType != ''">#{prodType},</if>
             <if test="flag1 != null">#{flag1},</if>
             <if test="flag2 != null">#{flag2},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
          </trim>
     </insert>
 
     <update id="updateProdCenter" parameterType="ProdCenter">
         update prod_center
         <trim prefix="SET" suffixOverrides=",">
-            <if test="prodTitle != null and prodTitle != ''">prod_title = #{prodTitle},</if>
+            <if test="prodTitle != null">prod_title = #{prodTitle},</if>
             <if test="prodCommon1 != null">prod_common_1 = #{prodCommon1},</if>
             <if test="prodCommon2 != null">prod_common_2 = #{prodCommon2},</if>
             <if test="prodCommon3 != null">prod_common_3 = #{prodCommon3},</if>
             <if test="prodCommon4 != null">prod_common_4 = #{prodCommon4},</if>
             <if test="prodImgAddress != null">prod_img_address = #{prodImgAddress},</if>
+            <if test="prodType != null and prodType != ''">prod_type = #{prodType},</if>
             <if test="flag1 != null">flag_1 = #{flag1},</if>
             <if test="flag2 != null">flag_2 = #{flag2},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
         </trim>
         where id = #{id}
     </update>

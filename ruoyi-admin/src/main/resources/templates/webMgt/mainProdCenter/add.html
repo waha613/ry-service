@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增产品中心数据')" />
+    <th:block th:include="include :: header('新增产品中心')" />
     <th:block th:include="include :: bootstrap-fileinput-css"/>
 </head>
 <body class="white-bg">
@@ -9,15 +9,15 @@
         <form class="form-horizontal m" id="form-mainProdCenter-add">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label is-required">产品标题：</label>
+                    <label class="col-sm-3 control-label">产品名称：</label>
                     <div class="col-sm-8">
-                        <input name="prodTitle" class="form-control" type="text" required>
+                        <input name="prodTitle" class="form-control" type="text">
                     </div>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">产品规格：</label>
+                    <label class="col-sm-3 control-label">规格：</label>
                     <div class="col-sm-8">
                         <textarea name="prodCommon1" class="form-control"></textarea>
                     </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">产品剂型：</label>
+                    <label class="col-sm-3 control-label">剂型：</label>
                     <div class="col-sm-8">
                         <textarea name="prodCommon2" class="form-control"></textarea>
                     </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">产品批准文号：</label>
+                    <label class="col-sm-3 control-label">批准文号：</label>
                     <div class="col-sm-8">
                         <textarea name="prodCommon3" class="form-control"></textarea>
                     </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">产品执行标准：</label>
+                    <label class="col-sm-3 control-label">执行标准：</label>
                     <div class="col-sm-8">
                         <textarea name="prodCommon4" class="form-control"></textarea>
                     </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">产品图片地址：</label>
+                    <label class="col-sm-3 control-label">图片地址：</label>
                     <div class="col-sm-8">
                         <input type="hidden" name="prodImgAddress">
                         <div class="file-loading">
@@ -60,9 +60,17 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">是否在首页产品中心展示：</label>
+                    <label class="col-sm-3 control-label is-required">产品类型：</label>
                     <div class="col-sm-8">
-                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input name="prodType" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否展示在首页产品中心：</label>
+                    <div class="col-sm-8">
+                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_yes_no')}">
                             <input type="radio" th:id="${'flag1_' + dict.dictCode}" name="flag1" th:value="${dict.dictValue}" th:checked="${dict.default}">
                             <label th:for="${'flag1_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
                         </div>
@@ -71,12 +79,31 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">是否在首页产品海报展示：</label>
+                    <label class="col-sm-3 control-label">是否展示在首页产品海报：</label>
                     <div class="col-sm-8">
-                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_yes_no')}">
                             <input type="radio" th:id="${'flag2_' + dict.dictCode}" name="flag2" th:value="${dict.dictValue}" th:checked="${dict.default}">
                             <label th:for="${'flag2_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否启用：</label>
+                    <div class="col-sm-8">
+                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_yes_no')}">
+                            <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                            <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">备注：</label>
+                    <div class="col-sm-8">
+                        <input name="remark" class="form-control" type="text">
                     </div>
                 </div>
             </div>

@@ -6,49 +6,57 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 产品中心数据对象 prod_center
+ * 产品中心对象 prod_center
  * 
- * @author ruoyi
- * @date 2025-01-10
+ * @author liuzihao
+ * @date 2025-01-11
  */
 public class ProdCenter extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 产品id */
+    /** ID */
     private Long id;
 
-    /** 产品标题 */
-    @Excel(name = "产品标题")
+    /** 产品名称 */
+    @Excel(name = "产品名称")
     private String prodTitle;
 
-    /** 产品规格 */
-    @Excel(name = "产品规格")
+    /** 规格 */
+    @Excel(name = "规格")
     private String prodCommon1;
 
-    /** 产品剂型 */
-    @Excel(name = "产品剂型")
+    /** 剂型 */
+    @Excel(name = "剂型")
     private String prodCommon2;
 
-    /** 产品批准文号 */
-    @Excel(name = "产品批准文号")
+    /** 批准文号 */
+    @Excel(name = "批准文号")
     private String prodCommon3;
 
-    /** 产品执行标准 */
-    @Excel(name = "产品执行标准")
+    /** 执行标准 */
+    @Excel(name = "执行标准")
     private String prodCommon4;
 
-    /** 产品图片地址 */
-    @Excel(name = "产品图片地址")
+    /** 图片地址 */
+    @Excel(name = "图片地址")
     private String prodImgAddress;
 
-    /** 是否在首页产品中心展示 */
-    @Excel(name = "是否在首页产品中心展示")
+    /** 产品类型 */
+    @Excel(name = "产品类型")
+    private String prodType;
+
+    /** 是否展示在首页产品中心 */
+    @Excel(name = "是否展示在首页产品中心")
     private String flag1;
 
-    /** 是否在首页产品海报展示 */
-    @Excel(name = "是否在首页产品海报展示")
+    /** 是否展示在首页产品海报 */
+    @Excel(name = "是否展示在首页产品海报")
     private String flag2;
+
+    /** 是否启用 */
+    @Excel(name = "是否启用")
+    private String status;
 
     public void setId(Long id) 
     {
@@ -120,6 +128,16 @@ public class ProdCenter extends BaseEntity
         return prodImgAddress;
     }
 
+    public void setProdType(String prodType) 
+    {
+        this.prodType = prodType;
+    }
+
+    public String getProdType() 
+    {
+        return prodType;
+    }
+
     public void setFlag1(String flag1) 
     {
         this.flag1 = flag1;
@@ -140,6 +158,16 @@ public class ProdCenter extends BaseEntity
         return flag2;
     }
 
+    public void setStatus(String status) 
+    {
+        this.status = status;
+    }
+
+    public String getStatus() 
+    {
+        return status;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -150,8 +178,15 @@ public class ProdCenter extends BaseEntity
             .append("prodCommon3", getProdCommon3())
             .append("prodCommon4", getProdCommon4())
             .append("prodImgAddress", getProdImgAddress())
+            .append("prodType", getProdType())
             .append("flag1", getFlag1())
             .append("flag2", getFlag2())
+            .append("status", getStatus())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("remark", getRemark())
             .toString();
     }
 }

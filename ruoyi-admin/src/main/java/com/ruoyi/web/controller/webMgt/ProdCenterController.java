@@ -1,9 +1,12 @@
 package com.ruoyi.web.controller.webMgt;
 
-import java.util.List;
+import java.util.*;
 
 import com.ruoyi.common.annotation.Anonymous;
+import com.ruoyi.system.domain.ProdCenter;
+import com.ruoyi.system.domain.ProdCenterVo;
 import com.ruoyi.system.domain.ResultData;
+import com.ruoyi.system.service.IProdCenterService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.ProdCenter;
-import com.ruoyi.system.service.IProdCenterService;
+
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -54,15 +56,50 @@ public class ProdCenterController extends BaseController
     }
 
     /**
+     * 查询产品中心列表
+     */
+    @PostMapping("/prodCenterList")
+    @ResponseBody
+    @Anonymous
+    @CrossOrigin(origins = "http://101.200.63.144", maxAge = 3600)
+    public ResultData prodCenterList(ProdCenter prodCenter)
+    {
+        prodCenter.setStatus("Y");
+        List<ProdCenter> list = prodCenterService.selectProdCenterList(prodCenter);
+        Map<String, List<ProdCenter>> prodCenterMap = new HashMap<>();
+        for (ProdCenter item : list) {
+            if (!prodCenterMap.containsKey(item.getProdType())) {
+                ArrayList<ProdCenter> prodCenters = new ArrayList<>();
+                prodCenters.add(item);
+                prodCenterMap.put(item.getProdType(), prodCenters);
+            } else {
+                prodCenterMap.get(item.getProdType()).add(item);
+            }
+        }
+
+        List<ProdCenterVo> prodCenterVos = new ArrayList<>();
+        Set<String> prodTypes = prodCenterMap.keySet();
+        for (String prodType : prodTypes) {
+            ProdCenterVo prodCenterVo = new ProdCenterVo();
+            prodCenterVo.setProdType(prodType);
+            prodCenterVo.setDetails(prodCenterMap.get(prodType));
+            prodCenterVos.add(prodCenterVo);
+        }
+
+        return new ResultData<>(200, "success", prodCenterVos) ;
+    }
+
+    /**
      * 查询首页产品中心列表
      */
     @PostMapping("/mainList")
     @ResponseBody
     @Anonymous
-    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+    @CrossOrigin(origins = "http://101.200.63.144", maxAge = 3600)
     public ResultData mainList(ProdCenter prodCenter)
     {
-        prodCenter.setFlag1("0");
+        prodCenter.setFlag1("Y");
+        prodCenter.setStatus("Y");
         List<ProdCenter> list = prodCenterService.selectProdCenterList(prodCenter);
         return new ResultData<>(200, "success", list) ;
     }
@@ -73,10 +110,11 @@ public class ProdCenterController extends BaseController
     @PostMapping("/mainPostersList")
     @ResponseBody
     @Anonymous
-    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+    @CrossOrigin(origins = "http://101.200.63.144", maxAge = 3600)
     public ResultData mainPostersList(ProdCenter prodCenter)
     {
-        prodCenter.setFlag2("0");
+        prodCenter.setFlag2("Y");
+        prodCenter.setStatus("Y");
         List<ProdCenter> list = prodCenterService.selectProdCenterList(prodCenter);
         return new ResultData<>(200, "success", list) ;
     }

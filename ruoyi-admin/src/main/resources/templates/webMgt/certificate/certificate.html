@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('产品中心列表')" />
+    <th:block th:include="include :: header('资质证书列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,26 +11,8 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>产品名称：</label>
-                                <input type="text" name="prodTitle"/>
-                            </li>
-                            <li>
-                                <label>产品类型：</label>
-                                <input type="text" name="prodType"/>
-                            </li>
-                            <li>
-                                <label>是否展示在首页产品中心：</label>
-                                <select name="flag1" th:with="type=${@dict.getType('sys_yes_no')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>是否展示在首页产品海报：</label>
-                                <select name="flag2" th:with="type=${@dict.getType('sys_yes_no')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <label>资质证书名称：</label>
+                                <input type="text" name="title"/>
                             </li>
                             <li>
                                 <label>是否启用：</label>
@@ -49,16 +31,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="webMgt:mainProdCenter:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="webMgt:certificate:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="webMgt:mainProdCenter:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="webMgt:certificate:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="webMgt:mainProdCenter:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="webMgt:certificate:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="webMgt:mainProdCenter:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="webMgt:certificate:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -69,12 +51,10 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('webMgt:mainProdCenter:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('webMgt:mainProdCenter:remove')}]];
-        var flag1Datas = [[${@dict.getType('sys_yes_no')}]];
-        var flag2Datas = [[${@dict.getType('sys_yes_no')}]];
+        var editFlag = [[${@permission.hasPermi('webMgt:certificate:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('webMgt:certificate:remove')}]];
         var statusDatas = [[${@dict.getType('sys_yes_no')}]];
-        var prefix = ctx + "webMgt/mainProdCenter";
+        var prefix = ctx + "webMgt/certificate";
 
         $(function() {
             var options = {
@@ -83,7 +63,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "产品中心",
+                modalName: "资质证书",
                 columns: [{
                     checkbox: true
                 },
@@ -93,46 +73,12 @@
                     visible: false
                 },
                 {
-                    field: 'prodTitle',
-                    title: '产品名称'
+                    field: 'title',
+                    title: '资质证书名称'
                 },
                 {
-                    field: 'prodCommon1',
-                    title: '规格'
-                },
-                {
-                    field: 'prodCommon2',
-                    title: '剂型'
-                },
-                {
-                    field: 'prodCommon3',
-                    title: '批准文号'
-                },
-                {
-                    field: 'prodCommon4',
-                    title: '执行标准'
-                },
-                {
-                    field: 'prodImgAddress',
+                    field: 'image',
                     title: '图片地址'
-                },
-                {
-                    field: 'prodType',
-                    title: '产品类型'
-                },
-                {
-                    field: 'flag1',
-                    title: '是否展示在首页产品中心',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(flag1Datas, value);
-                    }
-                },
-                {
-                    field: 'flag2',
-                    title: '是否展示在首页产品海报',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(flag2Datas, value);
-                    }
                 },
                 {
                     field: 'status',

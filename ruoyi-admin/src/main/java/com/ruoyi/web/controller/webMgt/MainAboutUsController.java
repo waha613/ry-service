@@ -1,6 +1,7 @@
 package com.ruoyi.webMgt.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.system.domain.ProdCenter;
@@ -90,7 +91,7 @@ public class MainAboutUsController extends BaseController
         MainAboutUs param = new MainAboutUs();
         param.setStatus("Y");
         List<MainAboutUs> mainAboutUses = mainAboutUsService.selectMainAboutUsList(param);
-        if (mainAboutUses != null && mainAboutUses.size() > 1 && "Y".equals(mainAboutUs.getStatus())) {
+        if (mainAboutUses != null && mainAboutUses.size() >= 1 && "Y".equals(mainAboutUs.getStatus())) {
            return AjaxResult.error("同一时间只能有一条数据在启用状态");
         }
 
@@ -121,7 +122,9 @@ public class MainAboutUsController extends BaseController
         MainAboutUs param = new MainAboutUs();
         param.setStatus("Y");
         List<MainAboutUs> mainAboutUses = mainAboutUsService.selectMainAboutUsList(param);
-        if (mainAboutUses != null && mainAboutUses.size() > 1 && "Y".equals(mainAboutUs.getStatus())) {
+        if (mainAboutUses != null && mainAboutUses.size() >= 1 && "Y".equals(mainAboutUs.getStatus())
+                && !Objects.equals(mainAboutUses.get(0).getId(), mainAboutUs.getId())) {
+
             return AjaxResult.error("同一时间只能有一条数据在启用状态");
         }
         return toAjax(mainAboutUsService.updateMainAboutUs(mainAboutUs));
@@ -145,7 +148,7 @@ public class MainAboutUsController extends BaseController
     @PostMapping("/mainList")
     @ResponseBody
     @Anonymous
-    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+    @CrossOrigin(origins = "http://101.200.63.144", maxAge = 3600)
     public ResultData mainList(MainAboutUs mainAboutUs)
     {
         mainAboutUs.setStatus("Y");
